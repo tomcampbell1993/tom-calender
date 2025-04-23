@@ -1,9 +1,11 @@
 import "./Day.css"
 
-export default function Day(){
+export default function Day(props){
+
+    
     return(
         <div className='day'>
-            Day
+            Today is { props.currentDay }
         </div>
     )
 }
