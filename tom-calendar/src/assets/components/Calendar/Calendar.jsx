@@ -1,24 +1,30 @@
 import { Link } from "react-router"
-import Day from "../Day/Day.jsx"
+import Day from '../Day/Day.jsx'
+
 import './calendar.css'
+
+
 
 export default function Calendar() {
 
-    const numberOfDays = 31;
-    let dayArray = [];
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth();
 
-    function daySetup(days) {
-        for (let i = 0; i < days; i++) {
-            dayArray[i] = i;
+    const daysInMonth = new Date(year, month, 0).getDate();
+
+    function createList() {
+        const dayList = [];
+
+        for (let i = 1; i < daysInMonth + 1; i++) {
+            dayList.push(i);
         }
-
-        return dayArray;
+        return dayList;
     }
 
-    const listDays = daySetup(numberOfDays).map((day) =>
-        <Day key={day.toString()} />
+    const dayItems = createList().map(day =>
+        <Day currentDay={day} key={day} />
     );
-
 
     return (
         <div>
@@ -27,8 +33,10 @@ export default function Calendar() {
                 <Link to='day'>Day</Link>
             </div>
             <div>
-                {listDays}
+                {dayItems}
             </div>
+
+
         </div>
     )
 }
