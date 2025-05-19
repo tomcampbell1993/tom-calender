@@ -11,19 +11,25 @@ export default function Calendar() {
     const year = date.getFullYear();
     const month = date.getMonth();
 
-    const daysInMonth = new Date(year, month, 0).getDate();
+    const daysInMonth = new Date(year, month+1, 0).getDate();
+
+    function findDay(dayNumber) {
+        const thatDay = new Date(year, month, dayNumber).getDay();
+        return thatDay
+    }
+
 
     function createList() {
         const dayList = [];
 
-        for (let i = 1; i < daysInMonth + 1; i++) {
+        for (let i = 0; i < daysInMonth; i++) {
             dayList.push(i);
         }
         return dayList;
     }
 
     const dayItems = createList().map(day =>
-        <Day currentDay={day} key={day} />
+        <Day currentDay={findDay(day)} key={day} />
     );
 
     return (
