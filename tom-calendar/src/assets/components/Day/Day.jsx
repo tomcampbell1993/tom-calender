@@ -9,29 +9,44 @@ export default function Day(props) {
             case 1:
                 return("Tuesday")
             case 2:
-                return"Wednessday"
+                return("Wednessday")
             case 3:
-                return"Thursday"
+                return("Thursday")
             case 4:
-                return"Friday"
+                return("Friday")
             case 5:
-                return"Saturday"
+                return("Saturday")
             case 6:
-                return"Sunday"
+                return("Sunday")
         }
     }
 
-    function formatTag(dayText) {
-
-        dayText = props.currentDay
-
-        return dayText
+    function formatDayNumber() {
+        switch (props.dayNumber) {
+            case 1:
+                return("st")
+            case 11:
+                return("st")
+            case 21:
+                return("st")
+            case 31:
+                return("st")
+            case 2:
+                return("nd")
+            case 22:
+                return("nd")
+            case 3:
+                return("rd")
+            case 23:
+                return("rd")
+            default:
+                return("th")           
+        }
     }
-
 
     return (
         <div className='day'>
-            Today is {formatDay()}
+            Today is {formatDay()} the {props.dayNumber}{formatDayNumber()}
         </div>
     )
 }
