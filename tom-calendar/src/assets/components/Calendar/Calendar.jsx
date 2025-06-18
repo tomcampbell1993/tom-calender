@@ -33,12 +33,12 @@ export default function Calendar() {
     );
 
     return (
-        <div>
+        <div className="calendar">
             <h1>Calendar</h1>
             <div>
                 <Link to='day'>Day</Link>
             </div>
-            <div>
+            <div className="day-wrapper">
                 {dayItems}
             </div>
 

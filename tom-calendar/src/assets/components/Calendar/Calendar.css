@@ -1,3 +1,15 @@
-h1{
-    color: red;
+
+
+
+.calendar{
+
+    h1{
+        color: red;
+    }
+
+    .day-wrapper{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
 }
