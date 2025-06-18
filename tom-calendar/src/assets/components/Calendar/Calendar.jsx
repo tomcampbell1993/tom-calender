@@ -29,7 +29,7 @@ export default function Calendar() {
     }
 
     const dayItems = createList().map(day =>
-        <Day currentDay={findDay(day)} key={day} />
+        <Day currentDay={findDay(day)} dayNumber={day+1} key={day} />
     );
 
     return (
