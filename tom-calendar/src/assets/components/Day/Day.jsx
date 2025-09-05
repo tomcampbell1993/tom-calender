@@ -7,7 +7,7 @@ export default function Day(props) {
     function formatDay() {
         switch (props.currentDay) {
             case 0:
-                return ("monday")
+                return ("Monday")
             case 1:
                 return ("Tuesday")
             case 2:
@@ -54,6 +54,6 @@ export default function Day(props) {
 }
 
 Day.propTypes = {
-    currentDay: PropTypes.string,
+    currentDay: PropTypes.number,
     dayNumber: PropTypes.number
 }

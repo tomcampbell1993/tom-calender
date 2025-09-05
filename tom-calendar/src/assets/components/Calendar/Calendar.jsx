@@ -1,4 +1,5 @@
 import { Link } from "react-router"
+import { useState } from 'react';
 import Day from '../Day/Day.jsx'
 
 import './calendar.css'
@@ -7,10 +8,10 @@ import './calendar.css'
 
 export default function Calendar() {
 
-    const date = new Date();
-    const year = 2025;
-    const month = 9;
-    const day = 10;
+    let date = new Date();
+    let year = 2025;
+    const [month, setMonth] = useState(9);
+    let day = 10;
 
     date.setMonth(month - 1);
     date.setFullYear(year);
@@ -65,9 +66,25 @@ export default function Calendar() {
         return dayList;
     }
 
-    const dayItems = createList().map(day =>
-        <Day currentDay={findDay(day)} dayNumber={day + 1} key={day} />
-    );
+    function dayItems() {
+
+        return (
+            createList().map(day =>
+                <Day currentDay={findDay(day)} dayNumber={day + 1} key={day} />
+            ))
+    };
+
+    function previousMonth() {
+        if (month > 1) {
+            setMonth(month - 1);
+        }
+    }
+
+    function nextMonth() {
+        if (month < 12) {
+            setMonth(month + 1);
+        }
+    }
 
     return (
         <div className="calendar">
@@ -76,16 +93,13 @@ export default function Calendar() {
                 <Link to='day'>Day</Link>
             </div>
             <div className="month-wrapper">
-                <button className="month-button previous">&lt;</button>
+                <button className="month-button previous" onClick={previousMonth}>&lt;</button>
                 <h2>{displayMonth(month)}</h2>
-                <button className="month-button next">&gt;</button>
+                <button className="month-button next" onClick={nextMonth}>&gt;</button>
             </div>
-
             <div className="day-wrapper">
-                {dayItems}
+                {dayItems()}
             </div>
-
-
         </div>
     )
 }
