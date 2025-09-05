@@ -1,15 +1,28 @@
+.calendar {
 
-
-
-.calendar{
-
-    h1{
+    h1 {
         color: red;
     }
 
-    .day-wrapper{
+    .day-wrapper {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
+    }
+
+    .month-wrapper {
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .month-button{
+            padding: 1rem;
+            margin: 0 1rem;
+        }
+
+        h2 {
+            text-align: center;
+        }
     }
 }

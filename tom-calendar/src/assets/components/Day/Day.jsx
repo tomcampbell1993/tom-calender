@@ -1,46 +1,48 @@
 import "./Day.css"
+import PropTypes from 'prop-types';
+
 
 export default function Day(props) {
 
     function formatDay() {
         switch (props.currentDay) {
             case 0:
-                return("monday")
+                return ("monday")
             case 1:
-                return("Tuesday")
+                return ("Tuesday")
             case 2:
-                return("Wednessday")
+                return ("Wednessday")
             case 3:
-                return("Thursday")
+                return ("Thursday")
             case 4:
-                return("Friday")
+                return ("Friday")
             case 5:
-                return("Saturday")
+                return ("Saturday")
             case 6:
-                return("Sunday")
+                return ("Sunday")
         }
     }
 
     function formatDayNumber() {
         switch (props.dayNumber) {
             case 1:
-                return("st")
+                return ("st")
             case 11:
-                return("st")
+                return ("st")
             case 21:
-                return("st")
+                return ("st")
             case 31:
-                return("st")
+                return ("st")
             case 2:
-                return("nd")
+                return ("nd")
             case 22:
-                return("nd")
+                return ("nd")
             case 3:
-                return("rd")
+                return ("rd")
             case 23:
-                return("rd")
+                return ("rd")
             default:
-                return("th")           
+                return ("th")
         }
     }
 
@@ -49,4 +51,9 @@ export default function Day(props) {
             Today is {formatDay()} the {props.dayNumber}{formatDayNumber()}
         </div>
     )
+}
+
+Day.propTypes = {
+    currentDay: PropTypes.string,
+    dayNumber: PropTypes.number
 }
