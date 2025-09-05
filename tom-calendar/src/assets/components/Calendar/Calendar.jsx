@@ -86,6 +86,30 @@ export default function Calendar() {
         }
     }
 
+    function toggleMonthDropDown() {
+
+    }
+
+    function monthDropDown() {
+        return (
+            <div>
+                <button onClick={(e) => setMonth(1)}>January</button>
+                <button onClick={(e) => setMonth(2)}>February</button>
+                <button onClick={(e) => setMonth(3)}>March</button>
+                <button onClick={(e) => setMonth(4)}>April</button>
+                <button onClick={(e) => setMonth(5)}>May</button>
+                <button onClick={(e) => setMonth(6)}>June</button>
+                <button onClick={(e) => setMonth(7)}>July</button>
+                <button onClick={(e) => setMonth(8)}>August</button>
+                <button onClick={(e) => setMonth(9)}>September</button>
+                <button onClick={(e) => setMonth(10)}>October</button>
+                <button onClick={(e) => setMonth(11)}>November</button>
+                <button onClick={(e) => setMonth(12)}>December</button>
+            </div>
+        )
+    }
+
+
     return (
         <div className="calendar">
             <h1>Calendar</h1>
@@ -94,12 +118,13 @@ export default function Calendar() {
             </div>
             <div className="month-wrapper">
                 <button className="month-button previous" onClick={previousMonth}>&lt;</button>
-                <h2>{displayMonth(month)}</h2>
+                <button className="month-title">{displayMonth(month)}</button>
                 <button className="month-button next" onClick={nextMonth}>&gt;</button>
             </div>
             <div className="day-wrapper">
                 {dayItems()}
             </div>
+            {monthDropDown()}
         </div>
     )
 }

@@ -21,7 +21,7 @@
             margin: 0 1rem;
         }
 
-        h2 {
+        .month-title {
             text-align: center;
         }
     }
