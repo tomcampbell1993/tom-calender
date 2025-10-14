@@ -10,14 +10,12 @@ export default function Calendar() {
 
     let date = new Date();
     let year = 2025;
-    const [month, setMonth] = useState(9);
+    const [month, setMonth] = useState(date.getMonth() + 1);
     let day = 10;
 
     date.setMonth(month - 1);
     date.setFullYear(year);
     date.setDate(day);
-
-    console.log(date);
 
     function displayMonth(thisMonth) {
         switch (thisMonth) {
@@ -74,6 +72,13 @@ export default function Calendar() {
             ))
     };
 
+
+    function getDayList() {
+        const daylist = document.getElementsByClassName("day");
+        return daylist;
+    }
+
+
     function previousMonth() {
         if (month > 1) {
             setMonth(month - 1);
@@ -87,24 +92,29 @@ export default function Calendar() {
     }
 
     function toggleMonthDropDown() {
+        const monthDropdownElements = Array.from(document.getElementsByClassName("month-dropdown-item"));
 
+        monthDropdownElements.forEach(element => {
+            element.classList.toggle("hidden");
+        });
     }
 
     function monthDropDown() {
         return (
-            <div>
-                <button onClick={(e) => setMonth(1)}>January</button>
-                <button onClick={(e) => setMonth(2)}>February</button>
-                <button onClick={(e) => setMonth(3)}>March</button>
-                <button onClick={(e) => setMonth(4)}>April</button>
-                <button onClick={(e) => setMonth(5)}>May</button>
-                <button onClick={(e) => setMonth(6)}>June</button>
-                <button onClick={(e) => setMonth(7)}>July</button>
-                <button onClick={(e) => setMonth(8)}>August</button>
-                <button onClick={(e) => setMonth(9)}>September</button>
-                <button onClick={(e) => setMonth(10)}>October</button>
-                <button onClick={(e) => setMonth(11)}>November</button>
-                <button onClick={(e) => setMonth(12)}>December</button>
+            <div className="month-dropdown">
+                <button onClick={(e) => toggleMonthDropDown()}>{displayMonth(month)}</button>
+                <button className="month-dropdown-item" onClick={(e) => setMonth(1)}>January</button>
+                <button className="month-dropdown-item" onClick={(e) => setMonth(2)}>February</button>
+                <button className="month-dropdown-item" onClick={(e) => setMonth(3)}>March</button>
+                <button className="month-dropdown-item" onClick={(e) => setMonth(4)}>April</button>
+                <button className="month-dropdown-item" onClick={(e) => setMonth(5)}>May</button>
+                <button className="month-dropdown-item" onClick={(e) => setMonth(6)}>June</button>
+                <button className="month-dropdown-item" onClick={(e) => setMonth(7)}>July</button>
+                <button className="month-dropdown-item" onClick={(e) => setMonth(8)}>August</button>
+                <button className="month-dropdown-item" onClick={(e) => setMonth(9)}>September</button>
+                <button className="month-dropdown-item" onClick={(e) => setMonth(10)}>October</button>
+                <button className="month-dropdown-item" onClick={(e) => setMonth(11)}>November</button>
+                <button className="month-dropdown-item" onClick={(e) => setMonth(12)}>December</button>
             </div>
         )
     }

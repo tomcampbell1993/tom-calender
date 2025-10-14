@@ -1,8 +1,11 @@
+import { useState } from "react";
 import "./Day.css"
 import PropTypes from 'prop-types';
 
 
 export default function Day(props) {
+
+    const [selected, setSelected] = useState(false);
 
     function formatDay() {
         switch (props.currentDay) {

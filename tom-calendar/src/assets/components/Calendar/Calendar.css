@@ -25,4 +25,17 @@
             text-align: center;
         }
     }
+
+    .month-dropdown{
+
+        margin: 1rem;
+
+        .month-dropdown-item{
+            display: flex;
+        }
+
+        .hidden{
+            display: none;
+        }
+    }
 }
