@@ -91,7 +91,14 @@ export default function Calendar() {
         }
     }
 
+    function setMonthDropDown(month) {
+        setMonth(month);
+        toggleMonthDropDown();
+
+    }
+
     function toggleMonthDropDown() {
+
         const monthDropdownElements = Array.from(document.getElementsByClassName("month-dropdown-item"));
 
         monthDropdownElements.forEach(element => {
@@ -103,18 +110,18 @@ export default function Calendar() {
         return (
             <div className="month-dropdown">
                 <button onClick={(e) => toggleMonthDropDown()}>{displayMonth(month)}</button>
-                <button className="month-dropdown-item" onClick={(e) => setMonth(1)}>January</button>
-                <button className="month-dropdown-item" onClick={(e) => setMonth(2)}>February</button>
-                <button className="month-dropdown-item" onClick={(e) => setMonth(3)}>March</button>
-                <button className="month-dropdown-item" onClick={(e) => setMonth(4)}>April</button>
-                <button className="month-dropdown-item" onClick={(e) => setMonth(5)}>May</button>
-                <button className="month-dropdown-item" onClick={(e) => setMonth(6)}>June</button>
-                <button className="month-dropdown-item" onClick={(e) => setMonth(7)}>July</button>
-                <button className="month-dropdown-item" onClick={(e) => setMonth(8)}>August</button>
-                <button className="month-dropdown-item" onClick={(e) => setMonth(9)}>September</button>
-                <button className="month-dropdown-item" onClick={(e) => setMonth(10)}>October</button>
-                <button className="month-dropdown-item" onClick={(e) => setMonth(11)}>November</button>
-                <button className="month-dropdown-item" onClick={(e) => setMonth(12)}>December</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(1)}>January</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(2)}>February</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(3)}>March</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(4)}>April</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(5)}>May</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(6)}>June</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(7)}>July</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(8)}>August</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(9)}>September</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(10)}>October</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(11)}>November</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(12)}>December</button>
             </div>
         )
     }
@@ -128,13 +135,12 @@ export default function Calendar() {
             </div>
             <div className="month-wrapper">
                 <button className="month-button previous" onClick={previousMonth}>&lt;</button>
-                <button className="month-title">{displayMonth(month)}</button>
+                {monthDropDown()}
                 <button className="month-button next" onClick={nextMonth}>&gt;</button>
             </div>
             <div className="day-wrapper">
                 {dayItems()}
             </div>
-            {monthDropDown()}
         </div>
     )
 }
