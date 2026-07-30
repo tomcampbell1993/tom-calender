@@ -109,7 +109,7 @@ export default function Calendar() {
     function monthDropDown() {
         return (
             <div className="month-dropdown">
-                <button onClick={(e) => toggleMonthDropDown()}>{displayMonth(month)}</button>
+                <button className ="month-title" onClick={(e) => toggleMonthDropDown()}>{displayMonth(month)}</button>
                 <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(1)}>January</button>
                 <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(2)}>February</button>
                 <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(3)}>March</button>
