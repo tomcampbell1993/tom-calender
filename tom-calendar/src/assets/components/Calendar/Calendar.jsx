@@ -1,4 +1,5 @@
 import { Link } from "react-router"
+import { useState } from 'react';
 import Day from '../Day/Day.jsx'
 
 import './calendar.css'
@@ -7,17 +8,52 @@ import './calendar.css'
 
 export default function Calendar() {
 
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth();
+    let date = new Date();
+    let year = 2025;
+    const [month, setMonth] = useState(date.getMonth() + 1);
+    let day = 10;
 
-    const daysInMonth = new Date(year, month+1, 0).getDate();
+    date.setMonth(month - 1);
+    date.setFullYear(year);
+    date.setDate(day);
 
-    function findDay(dayNumber) {
-        const thatDay = new Date(year, month, dayNumber).getDay();
-        return thatDay
+    function displayMonth(thisMonth) {
+        switch (thisMonth) {
+            case 1:
+                return "January"
+            case 2:
+                return "February"
+            case 3:
+                return "March"
+            case 4:
+                return "April"
+            case 5:
+                return "May"
+            case 6:
+                return "June"
+            case 7:
+                return "July"
+            case 8:
+                return "August"
+            case 9:
+                return "September"
+            case 10:
+                return "October"
+            case 11:
+                return "November"
+            case 12:
+                return "December"
+        }
     }
 
+
+
+    const daysInMonth = new Date(year, month, 0).getDate();
+
+    function findDay(dayNumber) {
+        const thatDay = new Date(year, month - 1, dayNumber).getDay();
+        return thatDay
+    }
 
     function createList() {
         const dayList = [];
@@ -28,9 +64,68 @@ export default function Calendar() {
         return dayList;
     }
 
-    const dayItems = createList().map(day =>
-        <Day currentDay={findDay(day)} dayNumber={day+1} key={day} />
-    );
+    function dayItems() {
+
+        return (
+            createList().map(day =>
+                <Day currentDay={findDay(day)} dayNumber={day + 1} key={day} />
+            ))
+    };
+
+
+    function getDayList() {
+        const daylist = document.getElementsByClassName("day");
+        return daylist;
+    }
+
+
+    function previousMonth() {
+        if (month > 1) {
+            setMonth(month - 1);
+        }
+    }
+
+    function nextMonth() {
+        if (month < 12) {
+            setMonth(month + 1);
+        }
+    }
+
+    function setMonthDropDown(month) {
+        setMonth(month);
+        toggleMonthDropDown();
+
+    }
+
+    function toggleMonthDropDown() {
+
+        const monthDropdownElements = Array.from(document.getElementsByClassName("month-dropdown-item"));
+
+        monthDropdownElements.forEach(element => {
+            element.classList.toggle("hidden");
+        });
+    }
+
+    function monthDropDown() {
+        return (
+            <div className="month-dropdown">
+                <button className ="month-title" onClick={(e) => toggleMonthDropDown()}>{displayMonth(month)}</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(1)}>January</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(2)}>February</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(3)}>March</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(4)}>April</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(5)}>May</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(6)}>June</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(7)}>July</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(8)}>August</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(9)}>September</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(10)}>October</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(11)}>November</button>
+                <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(12)}>December</button>
+            </div>
+        )
+    }
+
 
     return (
         <div className="calendar">
@@ -38,11 +133,14 @@ export default function Calendar() {
             <div>
                 <Link to='day'>Day</Link>
             </div>
-            <div className="day-wrapper">
-                {dayItems}
+            <div className="month-wrapper">
+                <button className="month-button previous" onClick={previousMonth}>&lt;</button>
+                {monthDropDown()}
+                <button className="month-button next" onClick={nextMonth}>&gt;</button>
             </div>
-
-
+            <div className="day-wrapper">
+                {dayItems()}
+            </div>
         </div>
     )
 }
