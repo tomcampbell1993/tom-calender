@@ -1,0 +1,47 @@
+.calendar {
+
+    h1 {
+        color: red;
+    }
+
+    .day-wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .month-wrapper {
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+
+        .month-button{
+            padding: 1rem;
+            margin: 0 4rem;
+        }
+    }
+
+    .month-dropdown{
+
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        top: 0;
+        min-width: 7rem;
+
+        .month-dropdown-item{
+            display: flex;
+            padding: 1rem;
+        }
+
+        .month-title {
+            padding: 1rem;
+        }
+
+        .hidden{
+            display: none;
+        }
+    }
+}
