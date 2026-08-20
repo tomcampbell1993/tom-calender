@@ -1,8 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider, createBrowserRouter } from 'react-router'
-import Calendar from './assets/components/Calendar/Calendar.jsx'
-import DayPage from './assets/components/DayPage/DayPage.jsx'
+import Calendar from './components/Calendar/Calendar.jsx'
+import DayPage from './components/DayPage/DayPage.jsx'
 import PageNotFound from './PageNotFound.jsx'
 
 const router = createBrowserRouter([
