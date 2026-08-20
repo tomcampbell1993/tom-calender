@@ -13,4 +13,22 @@ describe('Calendar component', () => {
 
         expect(screen.getByText("Calendar")).toBeInTheDocument();
     })
+
+    it("Opens and closes the month drop down", () => {
+
+        render(
+            <BrowserRouter>
+                <Calendar />
+            </BrowserRouter>
+        )
+
+        const monthButton = document.querySelector('.month-title');
+        expect(monthButton).toBeVisible();
+        monthButton.click();
+        expect(screen.getByText("January")).toBeVisible();
+        expect(screen.getByText("February")).toBeVisible();
+        screen.getByText("February").click();
+        expect(screen.getByText("January")).toHaveClass('hidden');
+
+    })
 })
