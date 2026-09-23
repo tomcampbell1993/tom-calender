@@ -1,12 +1,23 @@
 import { Link } from "react-router"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Day from '../Day/Day.jsx'
 
 import './calendar.css'
 
-
-
 export default function Calendar() {
+
+    const [events, setEvents] = useState([]);
+
+    useEffect(() => {
+        async function getEvents() {
+            const response = await fetch("http://localhost:3001/api/events");
+            const data = await response.json();
+
+            console.log(data);
+            setEvents(data);
+        }
+        getEvents();
+    }, []);
 
     let date = new Date();
     let year = 2025;
@@ -109,7 +120,7 @@ export default function Calendar() {
     function monthDropDown() {
         return (
             <div className="month-dropdown">
-                <button className ="month-title" onClick={(e) => toggleMonthDropDown()}>{displayMonth(month)}</button>
+                <button className="month-title" onClick={(e) => toggleMonthDropDown()}>{displayMonth(month)}</button>
                 <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(1)}>January</button>
                 <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(2)}>February</button>
                 <button className="month-dropdown-item hidden" onClick={(e) => setMonthDropDown(3)}>March</button>
