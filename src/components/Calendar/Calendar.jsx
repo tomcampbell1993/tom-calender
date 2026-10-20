@@ -21,7 +21,7 @@ export default function Calendar() {
     }, []);
 
     let date = new Date();
-    let year = 2025;
+    let year = 2026;
     const [month, setMonth] = useState(date.getMonth() + 1);
     let day = 10;
 
@@ -66,30 +66,6 @@ export default function Calendar() {
         const thatDay = new Date(year, month - 1, dayNumber).getDay();
         return thatDay
     }
-
-    function createList() {
-        const dayList = [];
-
-        for (let i = 0; i < daysInMonth; i++) {
-            dayList.push(i);
-        }
-        return dayList;
-    }
-
-    function dayItems() {
-
-        return (
-            createList().map(day =>
-                <Day currentDay={findDay(day)} dayNumber={day + 1} key={day} />
-            ))
-    };
-
-
-    function getDayList() {
-        const daylist = document.getElementsByClassName("day");
-        return daylist;
-    }
-
 
     function previousMonth() {
         if (month > 1) {
@@ -152,7 +128,13 @@ export default function Calendar() {
                 <button className="month-button next" onClick={nextMonth}>&gt;</button>
             </div>
             <div className="day-wrapper">
-                {dayItems()}
+                {Array.from({ length: daysInMonth }, (_, index) => index + 1).map(dayNumber => (
+                    <Day
+                        key={dayNumber}
+                        dayNumber={dayNumber}
+                        currentDay={new Date(year, month - 1, dayNumber).getDay()}
+                    />
+                ))}
             </div>
         </div>
     )
