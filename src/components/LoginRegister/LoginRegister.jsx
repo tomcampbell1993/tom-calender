@@ -4,9 +4,8 @@ import { useState } from 'react';
 export default function LoginRegister() {
 
     const [password, setPassword] = useState("");
-
+    const [errorMessage, setErrorMessage] = useState("");
     let errors = [];
-    let errorMessage = "";
 
     //pasword rules: (i know regex is easier but i want to do it this way cos of a test i fked up)
     // 1.minimum 8 characters long
@@ -15,6 +14,9 @@ export default function LoginRegister() {
     // 4.must include one lowercase letter, one uppercase letter, and one number
     function checkPassword(e) {
         e.preventDefault();
+        setErrorMessage("");
+        errors = [];
+
         if (password.length < 8) {
             errors.push(1);
         }
@@ -44,36 +46,35 @@ export default function LoginRegister() {
         let foundLowercase = false;
         let foundUppercase = false;
         let foundNumber = false;
-        for(const char of password) {
-            if(isNaN(char) === false){
+        for (const char of password) {
+            if ("0123456789".includes(char)) {
                 foundNumber = true;
                 continue;
             }
             if (char === '@' || char === '#' || char === '$' || char === '%' || char === '&') {
                 continue;
             }
-            if(char === char.toLowerCase()){
+            if (char === char.toLowerCase() && char !== char.toUpperCase()) {
                 foundLowercase = true;
             }
-            if(char === char.toUpperCase()){
+            if (char === char.toUpperCase() && char !== char.toLowerCase()) {
                 foundUppercase = true;
             }
         }
-        if(foundLowercase === true || foundUppercase === true || foundNumber === true){
+        if (foundLowercase === false || foundUppercase === false || foundNumber === false) {
             errors.push(4);
         }
         CreateErrorMessage();
     }
 
     function CreateErrorMessage() {
+        let message = "";
         errors.forEach((err) => {
-            errorMessage += err;
+            message += err;
         });
-        console.log(errorMessage);
-        errorMessage = "";
-        errors = [];
+        console.log(message);
+        setErrorMessage(message);
     }
-
 
     return (
         <div className="login-register">
