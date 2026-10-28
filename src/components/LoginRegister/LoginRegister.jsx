@@ -3,7 +3,10 @@ import { useState } from 'react';
 
 export default function LoginRegister() {
 
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [register, setRegister] = useState(true);
     const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     let errors = [];
 
@@ -12,8 +15,7 @@ export default function LoginRegister() {
     // 2.must have at lease One special character of either (@, #, $, %, &)
     // 3.must not contain more than 4 of the same character in a row
     // 4.must include one lowercase letter, one uppercase letter, and one number
-    function checkPassword(e) {
-        e.preventDefault();
+    function checkPassword() {
         setErrorMessage("");
         errors = [];
 
@@ -65,6 +67,10 @@ export default function LoginRegister() {
             errors.push(4);
         }
         CreateErrorMessage();
+        if (errors.length > 0) {
+            return false;
+        }
+        return true;
     }
 
     function CreateErrorMessage() {
@@ -76,17 +82,50 @@ export default function LoginRegister() {
         setErrorMessage(message);
     }
 
+    async function HandleSubmit(e) {
+        e.preventDefault();
+        if (register) {
+            const isValid = checkPassword();
+            if(isValid) {
+                const response = await fetch("http://localhost:3001/api/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ email, password })
+                })
+                const data = await response.json();
+                if(response.ok) {
+                    console.log(data.message);
+                } else{
+                    console.log(data.message);
+                }
+            }
+        }
+    }
+
     return (
         <div className="login-register">
-            <h1>Login/Register</h1>
-            <form onSubmit={checkPassword}>
+            <h1>{register ? "Register" : "Login"}</h1>
+            <form onSubmit={HandleSubmit}>
+                <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="example@email.com"
+                >
+                </input>
                 <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter your password"
                 />
                 <button type="submit">Submit</button>
             </form>
+            <button onClick={() => setRegister(!register)}>
+                {register ? "Switch to login" : "Switch to register"}
+            </button>
             <p>
                 {errorMessage}
             </p>

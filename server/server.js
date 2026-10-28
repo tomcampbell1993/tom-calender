@@ -9,6 +9,21 @@ app.use(cors({
 
 app.use(express.json());
 
+let users = [
+
+]
+
+app.post("/api/register", (req, res) => {
+
+    const registeredUser = users.find(user => user.email === req.body.email);
+    if(registeredUser) {
+        return res.status(400).json({ message: "User already exists" });
+    }
+    const newUser = {email: req.body.email, password: req.body.password};
+    users.push(newUser);
+    return res.status(201).json({ message: "User registered successfully" });
+})
+
 let events = [
     {
         "id": "1",

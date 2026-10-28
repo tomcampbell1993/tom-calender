@@ -14,7 +14,6 @@ export default function Calendar() {
             const response = await fetch("http://localhost:3001/api/events");
             const data = await response.json();
 
-            //console.log(data);
             setEvents(data);
         }
         getEvents();
