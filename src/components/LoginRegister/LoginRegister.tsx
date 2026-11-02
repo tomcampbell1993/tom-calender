@@ -1,24 +1,31 @@
 import { useState } from 'react';
 
+type LoginRegisterProps = {
+    onLogin: (email: string) => void;
+};
 
-export default function LoginRegister({onLogin}) {
+type AuthResponse = {
+    message: string;
+    email?: string;
+}
+
+export default function LoginRegister({ onLogin }: LoginRegisterProps) {
 
     const [register, setRegister] = useState(true);
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
-    const [messageType, setMessageType] = useState("");
 
-    let errors = [];
 
-    //pasword rules: (i know regex is easier but i want to do it this way cos of a test i fked up)
+    //pasword rules: (i know regex is easier but i want to do it this way cos of a test I failed)
     // 1.minimum 8 characters long
     // 2.must have at lease One special character of either (@, #, $, %, &)
     // 3.must not contain more than 4 of the same character in a row
     // 4.must include one lowercase letter, one uppercase letter, and one number
     function checkPassword() {
         setMessage("");
-        errors = [];
+        let errors: number[] = [];
+
 
         if (password.length < 8) {
             errors.push(1);
@@ -67,26 +74,26 @@ export default function LoginRegister({onLogin}) {
         if (foundLowercase === false || foundUppercase === false || foundNumber === false) {
             errors.push(4);
         }
-        CreateErrorMessage();
+        CreateErrorMessage(errors);
         if (errors.length > 0) {
             return false;
         }
         return true;
     }
 
-    function CreateErrorMessage() {
+    function CreateErrorMessage(errors: number[]) {
         let message = "";
         errors.forEach((err) => {
-            if(err === 1){
+            if (err === 1) {
                 message += "Password must be at least 8 characters long. ";
             }
-            if(err === 2){
+            if (err === 2) {
                 message += "Password must contain at least one special character (@, #, $, %, &). ";
             }
-            if(err === 3){
+            if (err === 3) {
                 message += "Password must not contain more than 4 of the same character in a row. ";
             }
-            if(err === 4){
+            if (err === 4) {
                 message += "Password must include one lowercase letter, one uppercase letter, and one number. ";
             }
         });
@@ -94,11 +101,10 @@ export default function LoginRegister({onLogin}) {
         setMessage(message);
     }
 
-    async function HandleSubmit(e) {
+    async function HandleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
         setMessage("");
-        setMessageType("");
 
         if (register) {
             const isValid = checkPassword();
@@ -116,23 +122,17 @@ export default function LoginRegister({onLogin}) {
                 body: JSON.stringify({ email, password })
             });
 
-            const data = await response.json();
+            const data: AuthResponse = await response.json();
             setMessage(data.message);
 
             if (response.ok) {
-                setMessageType("success");
-                if(!register){
+                if (!register) {
                     onLogin(email);
                 }
             }
-            else {
-                setMessageType("error");
-            }
-
         }
         catch (error) {
             setMessage("There has been an error");
-            setMessageType("error");
         }
     }
 
@@ -143,14 +143,14 @@ export default function LoginRegister({onLogin}) {
                 <input
                     type="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                     placeholder="example@email.com"
                 >
                 </input>
                 <input
                     type="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                     placeholder="Enter your password"
                 />
                 <button type="submit">Submit</button>

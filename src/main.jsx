@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider, createBrowserRouter } from 'react-router'
-import Calendar from './components/Calendar/Calendar.jsx'
+import Calendar from './components/Calendar/Calendar.tsx'
 import DayPage from './components/DayPage/DayPage.jsx'
 import PageNotFound from './PageNotFound.jsx'
 

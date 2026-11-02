@@ -1,7 +1,7 @@
 import { Link } from "react-router"
 import { useState } from 'react';
-import Day from '../Day/Day.jsx'
-import LoginRegister from '../LoginRegister/LoginRegister.jsx'
+import Day from '../Day/Day.tsx'
+import LoginRegister from '../LoginRegister/LoginRegister.tsx'
 
 import './calendar.css'
 
@@ -10,7 +10,7 @@ export default function Calendar() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [userName, setUserName] = useState("Not Logged in");
 
-    function HandleLogin(email){
+    function HandleLogin(email: string){
         setLoggedIn(true);
         setUserName(email);
     }
@@ -29,16 +29,11 @@ export default function Calendar() {
         "September", "October", "November", "December"
     ];
 
-    function displayMonth(thisMonth) {
+    function displayMonth(thisMonth: number) {
         return months[thisMonth];      
     }
 
     const daysInMonth = new Date(year, month+1, 0).getDate();
-
-    function findDay(dayNumber) {
-        const thatDay = new Date(year, month, dayNumber).getDay();
-        return thatDay
-    }
 
     function previousMonth() {
         if (month > 0) {
@@ -52,7 +47,7 @@ export default function Calendar() {
         }
     }
 
-    function setMonthDropDown(month) {
+    function setMonthDropDown(month: number) {
         setMonth(month);
         setIsMonthDropdownOpen(false);
     }

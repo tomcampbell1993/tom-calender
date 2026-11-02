@@ -1,6 +1,11 @@
 import "./Day.css"
 
-export default function Day(props) {
+type DayProps = {
+    currentDay: number,
+    dayNumber: number
+}
+
+export default function Day(props: DayProps) {
 
     function formatDay() {
         switch (props.currentDay) {
@@ -26,7 +31,7 @@ export default function Day(props) {
             case 1:
                 return ("st")
             case 11:
-                return ("st")
+                return ("th")
             case 21:
                 return ("st")
             case 31:
