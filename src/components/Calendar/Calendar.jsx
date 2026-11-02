@@ -1,20 +1,26 @@
 import { Link } from "react-router"
 import { useState, useEffect } from 'react';
 import Day from '../Day/Day.jsx'
-import loginRegister from '../LoginRegister/LoginRegister.jsx'
+import LoginRegister from '../LoginRegister/LoginRegister.jsx'
 
 import './calendar.css'
 
 export default function Calendar() {
 
     const [events, setEvents] = useState([]);
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [userName, setUserName] = useState("Not Logged in");
+
+    function HandleLogin(email){
+        setLoggedIn(true);
+        setUserName(email);
+    }
 
     useEffect(() => {
         async function getEvents() {
             const response = await fetch("http://localhost:3001/api/events");
             const data = await response.json();
 
-            //console.log(data);
             setEvents(data);
         }
         getEvents();
@@ -88,7 +94,7 @@ export default function Calendar() {
     return (
         <div className="calendar">
             <h1>Calendar</h1>
-            {loginRegister()}
+            {!loggedIn ? <LoginRegister onLogin={HandleLogin} /> : <h2>Welcome {userName}</h2>}
             <div>
                 <Link to='day'>Day</Link>
             </div>
