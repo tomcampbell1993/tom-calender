@@ -1,13 +1,14 @@
 import { useState } from 'react';
 
 
-export default function LoginRegister() {
+export default function LoginRegister({onLogin}) {
 
-    const [loggedIn, setLoggedIn] = useState(false);
     const [register, setRegister] = useState(true);
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
+    const [message, setMessage] = useState("");
+    const [messageType, setMessageType] = useState("");
+
     let errors = [];
 
     //pasword rules: (i know regex is easier but i want to do it this way cos of a test i fked up)
@@ -16,7 +17,7 @@ export default function LoginRegister() {
     // 3.must not contain more than 4 of the same character in a row
     // 4.must include one lowercase letter, one uppercase letter, and one number
     function checkPassword() {
-        setErrorMessage("");
+        setMessage("");
         errors = [];
 
         if (password.length < 8) {
@@ -76,31 +77,62 @@ export default function LoginRegister() {
     function CreateErrorMessage() {
         let message = "";
         errors.forEach((err) => {
-            message += err;
+            if(err === 1){
+                message += "Password must be at least 8 characters long. ";
+            }
+            if(err === 2){
+                message += "Password must contain at least one special character (@, #, $, %, &). ";
+            }
+            if(err === 3){
+                message += "Password must not contain more than 4 of the same character in a row. ";
+            }
+            if(err === 4){
+                message += "Password must include one lowercase letter, one uppercase letter, and one number. ";
+            }
         });
         console.log(message);
-        setErrorMessage(message);
+        setMessage(message);
     }
 
     async function HandleSubmit(e) {
         e.preventDefault();
+
+        setMessage("");
+        setMessageType("");
+
         if (register) {
             const isValid = checkPassword();
-            if(isValid) {
-                const response = await fetch("http://localhost:3001/api/register", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ email, password })
-                })
-                const data = await response.json();
-                if(response.ok) {
-                    console.log(data.message);
-                } else{
-                    console.log(data.message);
+            if (!isValid) {
+                return;
+            }
+        }
+
+        try {
+            const endpoint = register ? "/api/register" : "/api/login";
+
+            const response = await fetch(`http://localhost:3001${endpoint}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await response.json();
+            setMessage(data.message);
+
+            if (response.ok) {
+                setMessageType("success");
+                if(!register){
+                    onLogin(email);
                 }
             }
+            else {
+                setMessageType("error");
+            }
+
+        }
+        catch (error) {
+            setMessage("There has been an error");
+            setMessageType("error");
         }
     }
 
@@ -127,7 +159,7 @@ export default function LoginRegister() {
                 {register ? "Switch to login" : "Switch to register"}
             </button>
             <p>
-                {errorMessage}
+                {message}
             </p>
         </div>
     )
